@@ -15,9 +15,13 @@ type assertPanic struct {
 func (a *assertPanic) IsError(msgAndARgs ...interface{}) *assertPanic {
 	err := a.convertToErr(msgAndARgs)
 
-	assert.Error(a.t, err)
+	assert.Error(a.t, err, msgAndARgs)
 
 	return a
+}
+
+func (a *assertPanic) NoCatch(msgAndARgs ...interface{}) {
+	assert.Nil(a.t, a.rec, msgAndARgs)
 }
 
 func (a *assertPanic) convertToErr(msgAndARgs ...interface{}) error {
